@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psovkomat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Smokum&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1em;
+            background-color: #333333;
+            color: #aaaaaa;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Smokum', Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 15px;
+            font-size: 5em;
+            text-transform: uppercase;
+            color: crimson;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        .curse {
+            display: flex;
+            align-items: center;
+        }
+        button {
+            padding: 20px 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-size: 1em;
+            font-weight: bold;
+            flex: 4;
+            transition: 0.5s;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21);
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21);
+            box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21);
+        }
+        .disable-dbl-tap-zoom {
+            touch-action: manipulation;
+        }
+        .times {
+            padding: 10px;
+            font-size: 1.2em;
+            flex: 1;
+        }
+        .number {
+            font-weight: bold;
+            padding: 10px;
+            color: white;
+            font-size: 1.2em;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Psovkomat</h1>
+    </header>
+    <main>
+
+    </main>
+    <script>
+
+        // Curses
+        let curses = [
+            "Pedercina",
+            "Debil",
+            "Kreten",
+            "Jebem",
+            "Zacepi"
+        ]
+
+        function createCurses() {
+
+            curses.forEach(element => {
+
+                // Create element
+                let section = document.createElement("section")
+                section.classList.add('curse', element.toLowerCase())
+                section.innerHTML = `<div class="times">Times:</div><div class="number">0</div><button id="${element.toLowerCase()}" class="disable-dbl-tap-zoom">${element}</button>`
+
+                // Add to document
+                document.querySelector("main").appendChild(section)
+
+                // Add event listener
+                let idString = "#" + element.toLowerCase()
+                console.log(idString)
+
+                let button = document.querySelector(idString)
+                console.log(button)
+
+                let screenWidth = window.screenWidth
+                
+                if (screenWidth < 1024) {
+                    button.addEventListener('touchstart', curseIncrement)
+                } else {
+                    button.addEventListener('click', curseIncrement)
+                }
+                
+            })
+
+            
+        }
+
+        createCurses()
+
+
+        function curseIncrement(e) {
+            let curse = e.target.innerHTML.toLowerCase()
+            let times = document.querySelector("." + curse).querySelector(".number").innerHTML
+            document.querySelector("." + curse).querySelector(".number").innerHTML = Number(times) + 1
+        }
+    </script>
+</body>
+</html>
